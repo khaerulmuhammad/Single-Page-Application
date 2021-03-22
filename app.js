@@ -1,11 +1,16 @@
 const express = require("express");
+const swaggerUI = require("swagger-ui-express");
+const swaggerJSON = require("./swagger.json");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const app = express();
 
+//Buat Middleware Swagger
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerJSON));
+
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8081",
 };
 
 app.use(cors(corsOptions));

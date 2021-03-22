@@ -1,0 +1,282 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Binar Academy Bootcamp challenge chapter 8",
+    "version": "1.0.0",
+    "title": "Node RESTFULL-SWAGGER",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "khaerulmuhammad1994@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "localhost:5000",
+  "basePath": "/api",
+  "tags": [
+    {
+      "name": "Player",
+      "description": "Operations about player"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/players": {
+      "get": {
+        "tags": [
+          "player"
+        ],
+        "summary": "List all players",
+        "description": "described hit",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Player object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "SUCCESS",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            }
+          },
+          "500": {
+            "description": "FAILED"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "player"
+        ],
+        "summary": "Add new player",
+        "description": "create new player",
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Token": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "SUCCESS",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Player"
+              }
+            }
+          },
+          "500": {
+            "description": "FAILED",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Some error occurred while creating the Player."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "petstore_auth": {
+      "type": "oauth2",
+      "authorizationUrl": "http://petstore.swagger.io/oauth/dialog",
+      "flow": "implicit",
+      "scopes": {
+        "write:pets": "modify pets in your account",
+        "read:pets": "read your pets"
+      }
+    },
+    "Token": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "Player": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "integer"
+        },
+        "experience": {
+          "type": "integer"
+        },
+        "lvl": {
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "/players/:{id}": {
+    "get": {
+      "tags": [
+        "player"
+      ],
+      "summary": "Find single player",
+      "description": "described hit",
+      "produces": [
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "description": "ID of Players to find player",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "SUCCESS",
+          "schema": {
+            "type": "data",
+            "items": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        },
+        "500": {
+          "description": "FAILED",
+          "message": "Error retrieving Player with id"
+        }
+      }
+    },
+    "put": {
+      "tags": [
+        "player"
+      ],
+      "summary": "Update player by id in the request",
+      "description": "",
+      "produces": [
+        "application/json"
+      ],
+      "consumes": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "SUCCESS",
+          "message": "Player was updated successfully.",
+          "schema": {
+            "type": "data",
+            "items": {
+              "$ref": "#/definitions/Player"
+            }
+          }
+        },
+        "400": {
+          "description": "FAILED",
+          "message": "Cannot update Player with id=${id}. Maybe Player was not found or req.body is empty!"
+        }
+      }
+    },
+    "delete": {
+      "tags": [
+        "player"
+      ],
+      "summary": "Delete Player With ID",
+      "description": "This can only be done by the logged in user.",
+      "operationId": "delete player",
+      "produces": [
+        "application/xml",
+        "application/json"
+      ],
+      "parameters": [
+        {
+          "name": "",
+          "in": "path",
+          "description": "",
+          "required": true,
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "SUCCESS",
+          "message": "Player was deleted successfully!  "
+        },
+        "400": {
+          "description": "FAILED",
+          "message": "Cannot delete Player with id=${id}. Maybe Player was not found!"
+        },
+        "500": {
+          "description": "FAILED",
+          "message": "Could not delete Player with id"
+        }
+      }
+    }
+  },
+  "/players/exp/:{id}": {
+    "post": {
+      "tags": [
+        "player"
+      ],
+      "summary": "Add player experience by certain amount",
+      "description": "show player experience",
+      "produces": [
+        "application/json"
+      ],
+      "consumes": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "SUCCESS",
+          "message": "Player with id=${id} has more experience."
+        },
+        "400": {
+          "description": "FAILED",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Cannot update Player with id=${id}."
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Player API",
+    "url": "http://player.io"
+  }
+}
